@@ -1,0 +1,13 @@
+<h3>Bitcoin Price</h3>
+<div 
+	*ngIf="loadstate"
+	class="loader">
+</div>
+<ul>
+  <li *ngFor="let d of data | async">
+    <p>Timestamp {{d.timestamp}}</p>
+    <p>Price {{d.price}}</p>
+    <p>Volume {{d.volume24h}}</p>
+  </li>
+</ul>
+
