@@ -17,9 +17,10 @@ export class BitcoinPriceComponent implements OnInit {
   constructor(bs: BitcoinPriceService) {
   	console.log(bs);
     this.data = bs.getData();
-   
+    this.loadstate = bs.loadstate
     console.log(this.data);
-    // console.log('loadstate', this.loadstate);
+    console.log('loadstate', this.loadstate);
+
 
   }
 

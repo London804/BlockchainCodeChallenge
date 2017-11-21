@@ -7,6 +7,7 @@ import 'rxjs/add/observable/interval';
 import 'rxjs/add/observable/of';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/do';
+import 'rxjs/add/operator/finally';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/retry';
 import 'rxjs/add/operator/switchMap';
@@ -21,12 +22,10 @@ loadstate: boolean;
 	constructor(private http: Http) { }
 
 	private showLoader(): void {
-	  console.log('Show loader');
 	  this.loadstate = true;
 	}
 
 	private hideLoader(): void {
-	  console.log('Hide loader');
 	  this.loadstate = false;
 	}
 
@@ -34,13 +33,29 @@ loadstate: boolean;
 		this.showLoader();
 		return this.http.get(API_URL)
 			.map((res: Response) => 
-				res.json(),
-				this.hideLoader())
+				res.json())
 			.catch(err => {
 			  console.error('handling error within getPhones()', err);
 			  const fakeData = [{ name: 'no phones could be loaded' }];
 			  return Observable.of(fakeData);
-			});
+			})
+			.finally(() => {
+          this.hideLoader();
+          console.log("stop loader");
+      });
+  }
+
+  poll1() {
+    return Observable.interval(2000)
+      .map(n => n % 2 ? '/phonesZZZ' : '/phones')
+      .switchMap((dataUrl: string) => this.http.get(API_URL + dataUrl))
+      .map((res: Response) => res.json())
+      .catch((err) => {
+        console.error('handling error within poll1()', err);
+        const fakeData = [{ name: 'no phones could be loaded' }];
+        return Observable.of(fakeData);
+      })
+      .do((data: any) => console.log('Data arrived', data));
   }
 
 }
