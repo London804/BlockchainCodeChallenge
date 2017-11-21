@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Http, Response } from '@angular/http';
 import { HttpClientModule } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
+import { LoaderService } from '../loader/loader.service';
 
 import 'rxjs/add/observable/interval';
 import 'rxjs/add/observable/of';
@@ -19,14 +20,25 @@ export class BitcoinPriceService {
 
 loadstate: boolean;
 
-	constructor(private http: Http) { }
+	constructor (
+		private http: Http, 
+		private loaderService: LoaderService) 
+	{ }
+
+	// private showLoader(): void {
+	//   this.loadstate = true;
+	// }
+
+	// private hideLoader(): void {
+	//   this.loadstate = false;
+	// }
 
 	private showLoader(): void {
-	  this.loadstate = true;
+	  this.loaderService.show();
 	}
 
 	private hideLoader(): void {
-	  this.loadstate = false;
+	  this.loaderService.hide();
 	}
 
 	getData(url = API_URL) {
@@ -41,7 +53,6 @@ loadstate: boolean;
 			})
 			.finally(() => {
           this.hideLoader();
-          console.log("stop loader");
       });
   }
 

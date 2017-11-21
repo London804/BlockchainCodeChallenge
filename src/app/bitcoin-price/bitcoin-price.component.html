@@ -1,8 +1,5 @@
 <h3>Bitcoin Price</h3>
-<div 
-	*ngIf="loadstate"
-	class="loader">
-</div>
+<app-loader></app-loader>
 <ul>
   <li *ngFor="let d of data | async">
     <p>Timestamp {{d.timestamp}}</p>

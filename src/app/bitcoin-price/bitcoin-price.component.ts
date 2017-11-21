@@ -21,7 +21,6 @@ export class BitcoinPriceComponent implements OnInit {
     console.log(this.data);
     console.log('loadstate', this.loadstate);
 
-
   }
 
   ngOnInit() {

@@ -7,6 +7,8 @@ import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { BitcoinPriceComponent } from './bitcoin-price/bitcoin-price.component';
 import { BitcoinPriceService }  from './bitcoin-price/bitcoin-price.service';
+import { LoaderService } from './loader/loader.service';
+import { LoaderComponent } from './loader/loader.component';
 
 const appRoutes: Routes = [
   { path: '', redirectTo: 'bitcoin', pathMatch: 'full' },
@@ -16,7 +18,8 @@ const appRoutes: Routes = [
 @NgModule({
   declarations: [
     AppComponent,
-    BitcoinPriceComponent
+    BitcoinPriceComponent,
+    LoaderComponent
   ],
   imports: [
     BrowserModule,
@@ -24,7 +27,10 @@ const appRoutes: Routes = [
     HttpClientModule,
     HttpModule
   ],
-  providers: [BitcoinPriceService],
+  providers: [
+    BitcoinPriceService, 
+    LoaderService
+   ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
