@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { Http, Response } from '@angular/http';
 import { HttpClientModule } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
+import {BehaviorSubject} from 'rxjs/BehaviorSubject';
+import {Subject} from 'rxjs/Subject';
 
 import 'rxjs/add/observable/interval';
 import 'rxjs/add/observable/of';
@@ -12,6 +14,7 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/retry';
 import 'rxjs/add/operator/switchMap';
 
+
 const API_URL = 'https://api.blockchain.info/price/index-series?base=btc&quote=USD&start=1503145039&scale=7200';
 
 @Injectable()
@@ -19,14 +22,20 @@ export class BitcoinPriceService {
 
 loadstate: boolean;
 
-	constructor(private http: Http) { }
+nameChange: Subject<boolean> = new Subject<boolean>();
+
+	constructor(private http: Http) {
+		this.loadstate = false;
+	}
 
 	private showLoader(): void {
 	  this.loadstate = true;
+	  this.nameChange.next(this.loadstate);
 	}
 
 	private hideLoader(): void {
 	  this.loadstate = false;
+	  this.nameChange.next(this.loadstate);
 	}
 
 	getData(url = API_URL) {
@@ -41,7 +50,7 @@ loadstate: boolean;
 			})
 			.finally(() => {
           this.hideLoader();
-          console.log("stop loader");
+          console.log('hideloader', this.loadstate);
       });
   }
 
