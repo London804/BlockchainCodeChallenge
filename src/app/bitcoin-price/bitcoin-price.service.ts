@@ -26,6 +26,13 @@ stateChange: Subject<boolean> = new Subject<boolean>();
 
 moneyArray = [];
 
+moneyChange: Subject<any> = new Subject<any>();
+
+private getArray(): void {
+	// this.moneyChange.next(this.moneyArray);
+	console.log('money array', this.moneyArray);
+}
+
 	constructor(private http: Http) {
 		this.loadstate = false;
 	}
@@ -59,8 +66,11 @@ moneyArray = [];
 			  return Observable.of(fakeData);
 			})
 			.finally(() => {
+					this.getArray();
           this.hideLoader();
+
           console.log('hideloader', this.loadstate);
+          console.log(this.moneyArray);
       });
   }
 
