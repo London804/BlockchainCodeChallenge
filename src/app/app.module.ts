@@ -3,10 +3,12 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { HttpModule } from '@angular/http';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
+import { ChartModule } from 'angular2-highcharts';
 
 import { AppComponent } from './app.component';
 import { BitcoinPriceComponent } from './bitcoin-price/bitcoin-price.component';
 import { BitcoinPriceService }  from './bitcoin-price/bitcoin-price.service';
+import { ChartComponent } from './chart/chart.component';
 
 const appRoutes: Routes = [
   { path: '', redirectTo: 'bitcoin', pathMatch: 'full' },
@@ -16,13 +18,15 @@ const appRoutes: Routes = [
 @NgModule({
   declarations: [
     AppComponent,
-    BitcoinPriceComponent
+    BitcoinPriceComponent,
+    ChartComponent
   ],
   imports: [
     BrowserModule,
     RouterModule.forRoot(appRoutes, { useHash: true }),
     HttpClientModule,
-    HttpModule
+    HttpModule,
+    ChartModule.forRoot(require('highcharts'),
   ],
   providers: [BitcoinPriceService],
   bootstrap: [AppComponent]

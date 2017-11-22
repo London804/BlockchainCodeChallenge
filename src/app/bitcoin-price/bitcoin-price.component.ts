@@ -20,7 +20,7 @@ export class BitcoinPriceComponent implements OnInit {
   	console.log(bs);
     this.data = bs.getData();
     this.loadstate = bs.loadstate
-    this.subscription = bs.nameChange.subscribe((value) => { 
+    this.subscription = bs.stateChange.subscribe((value) => { 
       this.loadstate = value; 
     });
     console.log(this.data);

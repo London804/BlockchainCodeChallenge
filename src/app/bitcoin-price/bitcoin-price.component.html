@@ -3,11 +3,11 @@
 	*ngIf="loadstate"
 	class="loader">
 </div>
+<app-chart></app-chart>
 <ul>
   <li *ngFor="let d of data | async">
-    <p>Timestamp {{d.timestamp}}</p>
+    <p>Timestamp {{d.timestamp * 1000 | date}}</p>
     <p>Price {{d.price}}</p>
     <p>Volume {{d.volume24h}}</p>
   </li>
 </ul>
-

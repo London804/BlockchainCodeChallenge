@@ -22,7 +22,7 @@ export class BitcoinPriceService {
 
 loadstate: boolean;
 
-nameChange: Subject<boolean> = new Subject<boolean>();
+stateChange: Subject<boolean> = new Subject<boolean>();
 
 	constructor(private http: Http) {
 		this.loadstate = false;
@@ -30,12 +30,12 @@ nameChange: Subject<boolean> = new Subject<boolean>();
 
 	private showLoader(): void {
 	  this.loadstate = true;
-	  this.nameChange.next(this.loadstate);
+	  this.stateChange.next(this.loadstate);
 	}
 
 	private hideLoader(): void {
 	  this.loadstate = false;
-	  this.nameChange.next(this.loadstate);
+	  this.stateChange.next(this.loadstate);
 	}
 
 	getData(url = API_URL) {
