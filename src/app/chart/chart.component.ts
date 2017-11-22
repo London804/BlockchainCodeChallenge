@@ -8,7 +8,14 @@ declare var jQuery:any;
 
 @Component({
   selector: 'app-chart',
-  template: `<div style="width:80%" id="container"></div>`,
+  template: `
+  			<section id="container">
+	  			<div
+					*ngIf="loadstate"
+					class="loader">
+				</div>
+	  			<div></div>
+	  		</section>`,
   styleUrls: ['./chart.component.scss']
 })
 export class ChartComponent implements OnInit {
@@ -18,6 +25,8 @@ export class ChartComponent implements OnInit {
   	loadstate: boolean;
   	subscription: Subscription;
 
+  	moneyArray = [];
+
 	constructor(bs: BitcoinPriceService) {
 	  	console.log(bs);
 	    this.priceData = bs.getData();
@@ -25,9 +34,53 @@ export class ChartComponent implements OnInit {
 	    this.subscription = bs.stateChange.subscribe((value) => { 
 	      this.loadstate = value; 
 	    });
-	    console.log(this.priceData);
+
+	    console.log('moneyArray', this.moneyArray = bs.moneyArray);
+
+	    console.log('priceData', this.priceData);
 	    console.log('loadstate', this.loadstate);
   	}
+
+
+// 	this.laugService.getAllLaug().subscribe(laug => {
+// 	   this.laugs = laug; //save posts in array
+
+	 //   if (this.laugs && this.laugs.array) {
+	 //       this.laugs.array.forEach(element => {
+	 //          this.modelLaugs.push(new Laug(element.navn, element.beskrivelse))
+	 //       });
+	 //   }
+
+	 //   for (let i = 0 i< salesData.length; i++) {
+		//     series.push({"name" : key, "data" : sales[key]})
+		// }
+
+		// let iterable = [10, 20, 30];
+
+		// for (let value of iterable) {
+		//   value += 1;
+		//   console.log(value);
+
+// 	});
+
+//     private graphData() {
+//     	var series = [],
+//     	priceData = this.priceData
+//     	console.log(priceData);
+
+// 		for (let i = 1; i < priceData.length; i++) {
+// 		    let newName = {
+// 		       id:i.toString(),
+// 		       name:"Tony"
+// 		    };
+// 		    series.push(newName);
+
+		
+
+		
+// }
+
+//     }
 
 	private data = [
 		{
@@ -100,7 +153,7 @@ export class ChartComponent implements OnInit {
 	        series: this.data
 	    });
     }
-
+    
 	ngOnDestroy() {
   		//prevent memory leak when component destroyed
 		this.subscription.unsubscribe();

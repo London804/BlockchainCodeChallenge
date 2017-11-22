@@ -24,6 +24,8 @@ loadstate: boolean;
 
 stateChange: Subject<boolean> = new Subject<boolean>();
 
+moneyArray = [];
+
 	constructor(private http: Http) {
 		this.loadstate = false;
 	}
@@ -41,8 +43,16 @@ stateChange: Subject<boolean> = new Subject<boolean>();
 	getData(url = API_URL) {
 		this.showLoader();
 		return this.http.get(API_URL)
-			.map((res: Response) => 
-				res.json())
+			.map((res: Response) => {
+			    let results = this.moneyArray;
+			    let obj = res.json();
+			    obj.forEach(
+			        function (o: any) {
+			            results.push((o.timestamp, o.price, o.volume24h));
+			        }
+			    );
+			    return results;
+			})
 			.catch(err => {
 			  console.error('handling error within getPhones()', err);
 			  const fakeData = [{ name: 'no phones could be loaded' }];
@@ -53,6 +63,8 @@ stateChange: Subject<boolean> = new Subject<boolean>();
           console.log('hideloader', this.loadstate);
       });
   }
+
+
 
   poll1() {
     return Observable.interval(2000)
