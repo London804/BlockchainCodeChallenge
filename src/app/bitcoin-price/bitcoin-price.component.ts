@@ -17,14 +17,14 @@ export class BitcoinPriceComponent implements OnInit {
   subscription: Subscription;
 
   constructor(bs: BitcoinPriceService) {
-  	console.log(bs);
-    this.data = bs.getData();
-    this.loadstate = bs.loadstate
-    this.subscription = bs.stateChange.subscribe((value) => { 
-      this.loadstate = value; 
-    });
-    console.log(this.data);
-    console.log('loadstate', this.loadstate);
+  	// console.log(bs);
+   //  this.data = bs.getData();
+   //  this.loadstate = bs.loadstate
+   //  this.subscription = bs.stateChange.subscribe((value) => { 
+   //    this.loadstate = value; 
+   //  });
+   //  console.log(this.data);
+   //  console.log('loadstate', this.loadstate);
 
 
   }
@@ -34,7 +34,7 @@ export class BitcoinPriceComponent implements OnInit {
 
   ngOnDestroy() {
   	//prevent memory leak when component destroyed
-    this.subscription.unsubscribe();
+    // this.subscription.unsubscribe();
   }
 
 }
