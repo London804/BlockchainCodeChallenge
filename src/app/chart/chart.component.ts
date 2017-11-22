@@ -20,7 +20,7 @@ declare var jQuery:any;
 })
 export class ChartComponent implements OnInit {
 
-	priceData: Observable<any[]>;
+	priceData: Subscription;
 
   	loadstate: boolean;
   	subscription: Subscription;
@@ -34,6 +34,8 @@ export class ChartComponent implements OnInit {
 	    this.subscription = bs.stateChange.subscribe((value) => { 
 	      this.loadstate = value; 
 	    });
+
+
 
 	    console.log('moneyArray', this.moneyArray = bs.moneyArray);
 
@@ -84,8 +86,7 @@ export class ChartComponent implements OnInit {
 
 	private data = [
 		{
-            name: 'USA',
-            data: this.priceData
+            name: 'USA'
         }, 
         {
         	name: 'USSR/Russia',
@@ -150,7 +151,7 @@ export class ChartComponent implements OnInit {
 	                }
 	            }
 	        },
-	        series: this.data
+	        series: this.moneyArray[0]
 	    });
     }
     

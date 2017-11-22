@@ -30,7 +30,6 @@ moneyChange: Subject<any> = new Subject<any>();
 
 private getArray(): void {
 	// this.moneyChange.next(this.moneyArray);
-	console.log('money array', this.moneyArray);
 }
 
 	constructor(private http: Http) {
@@ -50,43 +49,43 @@ private getArray(): void {
 	getData(url = API_URL) {
 		this.showLoader();
 		return this.http.get(API_URL)
-			.map((res: Response) => {
-			    let results = this.moneyArray;
-			    let obj = res.json();
-			    obj.forEach(
-			        function (o: any) {
-			            results.push((o.timestamp, o.price, o.volume24h));
-			        }
-			    );
-			    return results;
-			})
-			.catch(err => {
-			  console.error('handling error within getPhones()', err);
-			  const fakeData = [{ name: 'no phones could be loaded' }];
-			  return Observable.of(fakeData);
-			})
-			.finally(() => {
-					this.getArray();
-          this.hideLoader();
+			.subscribe((res: Response) => {
+				this.moneyArray.push(res.json())
+			//     let results = this.moneyArray;
+			//     let obj = res.json();
+			//     obj.forEach(
+			//         function (o: any) {
+			//             results.push((o.timestamp, o.price, o.volume24h));
+			//         }
+			//     );
+			// })
+			// .error(err => {
+			//   console.error('handling error within getPhones()', err);
+			//   const fakeData = [{ name: 'no phones could be loaded' }];
+			//   return Observable.of(fakeData);
+			// })
+			// .finally(() => {
+			// 		this.getArray();
+   //        this.hideLoader();
 
-          console.log('hideloader', this.loadstate);
-          console.log(this.moneyArray);
-      });
+   //        console.log('hideloader', this.loadstate);
+   //        console.log(this.moneyArray);
+   //    });
   }
 
 
 
-  poll1() {
-    return Observable.interval(2000)
-      .map(n => n % 2 ? '/phonesZZZ' : '/phones')
-      .switchMap((dataUrl: string) => this.http.get(API_URL + dataUrl))
-      .map((res: Response) => res.json())
-      .catch((err) => {
-        console.error('handling error within poll1()', err);
-        const fakeData = [{ name: 'no phones could be loaded' }];
-        return Observable.of(fakeData);
-      })
-      .do((data: any) => console.log('Data arrived', data));
-  }
+//   poll1() {
+//     return Observable.interval(2000)
+//       .map(n => n % 2 ? '/phonesZZZ' : '/phones')
+//       .switchMap((dataUrl: string) => this.http.get(API_URL + dataUrl))
+//       .map((res: Response) => res.json())
+//       .catch((err) => {
+//         console.error('handling error within poll1()', err);
+//         const fakeData = [{ name: 'no phones could be loaded' }];
+//         return Observable.of(fakeData);
+//       })
+//       .do((data: any) => console.log('Data arrived', data));
+//   }
 
-}
+// }
