@@ -50,15 +50,15 @@ private getArray(): void {
 		this.showLoader();
 		return this.http.get(API_URL)
 			.subscribe((res: Response) => {
-				this.moneyArray.push(res.json())
-			//     let results = this.moneyArray;
-			//     let obj = res.json();
-			//     obj.forEach(
-			//         function (o: any) {
-			//             results.push((o.timestamp, o.price, o.volume24h));
-			//         }
-			//     );
-			// })
+				// this.moneyArray.push(res.json())
+			    let results = this.moneyArray;
+			    let obj = res.json();
+			    obj.forEach(
+			        function (o: any) {
+			            results.push(o);
+			        }
+			    );
+			})
 			// .error(err => {
 			//   console.error('handling error within getPhones()', err);
 			//   const fakeData = [{ name: 'no phones could be loaded' }];
@@ -73,19 +73,5 @@ private getArray(): void {
    //    });
   }
 
+}
 
-
-//   poll1() {
-//     return Observable.interval(2000)
-//       .map(n => n % 2 ? '/phonesZZZ' : '/phones')
-//       .switchMap((dataUrl: string) => this.http.get(API_URL + dataUrl))
-//       .map((res: Response) => res.json())
-//       .catch((err) => {
-//         console.error('handling error within poll1()', err);
-//         const fakeData = [{ name: 'no phones could be loaded' }];
-//         return Observable.of(fakeData);
-//       })
-//       .do((data: any) => console.log('Data arrived', data));
-//   }
-
-// }

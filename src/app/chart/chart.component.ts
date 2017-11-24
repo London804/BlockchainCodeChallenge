@@ -151,7 +151,10 @@ export class ChartComponent implements OnInit {
 	                }
 	            }
 	        },
-	        series: this.moneyArray[0]
+	        series: [{
+	        	data: this.moneyArray,
+	        	name: 'Value Type Description'
+	        }]
 	    });
     }
     
