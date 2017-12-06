@@ -2,12 +2,19 @@
 	*ngIf="loadstate"
 	class="loader">
 </div>
-<chart [options]="options"></chart>
+<!-- <chart [options]="options"></chart> -->
+
 
 <!-- <ul>
   <li *ngFor="let d of data | async">
     <p>Timestamp {{d.timestamp * 1000 | date}}</p>
     <p>Price {{d.price}}</p>
     <p>Volume {{d.volume24h}}</p>
+  </li>
+</ul>
+
+<ul>
+  <li *ngFor="let book of books" >
+    Id: {{book.id}}, Name: {{book.name}}
   </li>
 </ul> -->

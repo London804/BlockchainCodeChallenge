@@ -14,64 +14,57 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/retry';
 import 'rxjs/add/operator/switchMap';
 
+import { Interface } from './interface';
 
 const API_URL = 'https://api.blockchain.info/price/index-series?base=btc&quote=USD&start=1503145039&scale=7200';
+
 
 @Injectable()
 export class BitcoinPriceService {
 
-loadstate: boolean;
+	loadstate: boolean;
 
-stateChange: Subject<boolean> = new Subject<boolean>();
+	stateChange: Subject<boolean> = new Subject<boolean>();
 
-moneyArray = [];
+	moneyArray = [];
 
-moneyChange: Subject<any> = new Subject<any>();
+	moneyChange: Subject<any> = new Subject<any>();
 
-private getArray(): void {
-	// this.moneyChange.next(this.moneyArray);
-}
 
-	constructor(private http: Http) {
-		this.loadstate = false;
+	private getArray(): void {
+		// this.moneyChange.next(this.moneyArray);
 	}
 
-	private showLoader(): void {
-	  this.loadstate = true;
-	  this.stateChange.next(this.loadstate);
-	}
+		constructor(private http: Http) {
+			this.loadstate = false;
+		}
 
-	private hideLoader(): void {
-	  this.loadstate = false;
-	  this.stateChange.next(this.loadstate);
-	}
+		private showLoader(): void {
+		  this.loadstate = true;
+		  this.stateChange.next(this.loadstate);
+		}
 
-	getData(url = API_URL) {
-		this.showLoader();
-		return this.http.get(API_URL)
-			.subscribe((res: Response) => {
-				// this.moneyArray.push(res.json())
-			    let results = this.moneyArray;
-			    let obj = res.json();
-			    obj.forEach(
-			        function (o: any) {
-			            results.push(o);
-			        }
-			    );
-			})
-			// .error(err => {
-			//   console.error('handling error within getPhones()', err);
-			//   const fakeData = [{ name: 'no phones could be loaded' }];
-			//   return Observable.of(fakeData);
-			// })
-			// .finally(() => {
-			// 		this.getArray();
-   //        this.hideLoader();
+		private hideLoader(): void {
+		  this.loadstate = false;
+		  this.stateChange.next(this.loadstate);
+		}
 
-   //        console.log('hideloader', this.loadstate);
-   //        console.log(this.moneyArray);
-   //    });
-  }
+		getData(): Observable<Interface[]> {
+			return this.http.get(API_URL)
+			.map(this.extractData)
+			.catch(this.handleError);
+		}
+
+
+		private extractData(res: Response) {
+			let body = res.json();
+        	return body;
+		}
+
+		private handleError (error: Response | any) {
+			console.error(error.message || error);
+			return Observable.throw(error.message || error);
+		}
 
 }
 
